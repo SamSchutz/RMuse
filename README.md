@@ -1,2 +1,4 @@
 # RMuse
-A data science/analysis project using Spotify API data
+A data analysis/visualization project using Spotify API data
+
+
