@@ -79,4 +79,4 @@ So with only 8 studio albums it's pretty easy to see which albums are the happie
 
 The next 20 lines of code are then spent building a ggplot2 visualization using the pipe operator, and generate the following graphic:
 
-![image](https://github.com/SamSchutz/RMuse/blob/master/Graphics%20and%20Plots/test.jpg "graphic")
+![image](RMuse/Graphics and Plots/test.jpg "graphic")
