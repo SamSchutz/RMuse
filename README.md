@@ -51,5 +51,32 @@ musedata <- select(musedata, -artist_id, -album_id, -album_type, -album_images, 
                    )
 ```
 
+## Sentiment Analysis
 
+In this particular project, instead of doing any feature engineering, we will just be using Spotify's metric of measuring mood: Valence. It is very easy to find the average happiness of each album in our dataset using the *dplyr* package and the manipulation verbs inside.
 
+```R
+musedata %>%
+  group_by(album_name) %>%
+  summarise(avg_joy = mean(valence)) %>%
+  arrange(desc(avg_joy))
+```
+Which gives us the output:
+```
+# A tibble: 8 x 2
+  album_name                       avg_joy
+  <fct>                              <dbl>
+1 Simulation Theory (Super Deluxe)   0.466
+2 Black Holes and Revelations        0.365
+3 Drones                             0.325
+4 The 2nd Law                        0.286
+5 Absolution                         0.249
+6 Origin of Symmetry                 0.230
+7 Showbiz                            0.230
+8 The Resistance                     0.215
+```
+So with only 8 studio albums it's pretty easy to see which albums are the happiest and which are the saddest. **HOWEVER**, Spotify's valence scale includes double values from `0.0` being the saddest possible value to `1.0` the happiest. From this, it becomes apparent that Muse albums in general are pretty depressing. With "The Resistance" having the lowest mood to "Simulation Theory" having a more neutral mood.
+
+The next 20 lines of code are then spent building a ggplot2 visualization using the pipe operator, and generate the following graphic:
+
+![alt text](https://github.com/SamSchutz/RMuse/blob/master/Graphics%20and%20Plots/ValenceGraphic.jpg "graphic")
