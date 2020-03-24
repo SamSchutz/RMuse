@@ -78,5 +78,23 @@ Which gives us the output:
 So with only 8 studio albums it's pretty easy to see which albums are the happiest and which are the saddest. **HOWEVER**, Spotify's valence scale includes double values from `0.0` being the saddest possible value to `1.0` the happiest. From this, it becomes apparent that Muse albums in general are pretty depressing. With "The Resistance" having the lowest mood to "Simulation Theory" having a more neutral mood.
 
 The next 20 lines of code are then spent building a ggplot2 visualization using the pipe operator, and generate the following graphic:
-
+```R
+musedata %>%
+  group_by(album_name, album_release_year) %>%
+  summarise(avg_joy = mean(valence)) %>%
+  arrange(desc(avg_joy)) %>%
+  ggplot(mapping = aes(reorder(album_name, album_release_year), avg_joy)) +
+  geom_point(aes(size = 3, colour=album_release_year)) +
+  ylim(0.0, 1.03) +
+  geom_hline(yintercept=0.50, linetype="dashed", color = "black", size = 1.5) +
+  geom_hline(yintercept=1.0, linetype="dashed", color = "black", size = 1.0) +
+  geom_hline(yintercept=0.0, linetype="dashed", color = "black", size = 1.0) +
+  geom_text(aes("Origin of Symmetry",0.53,label = "Neutral emotion marker")) +
+  geom_text(aes("Origin of Symmetry",1.03,label = "Incredible joy")) +
+  geom_text(aes("Origin of Symmetry",0.03,label = "Ultimate sadness")) +
+  labs(title = "Average sentiment for each Muse album: A progression",
+       subtitle = "(Using metrics pulled from Spotify's API)",
+       y = "Average valence",
+       x = "Album name by release date")
+```
 ![](https://i.imgur.com/a2H3KFA.png)
